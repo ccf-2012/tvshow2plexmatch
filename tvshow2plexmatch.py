@@ -1,6 +1,4 @@
 import os
-import glob
-import re
 import argparse
 import xml.etree.ElementTree as ET
 
@@ -26,7 +24,7 @@ def mkPlexMatch(targetDir, tmdbid, title, year):
             pmfile.write("Year: %s\n" % (year))
 
 
-def rename_dirs_with_tmdb(root_dir):
+def make_plexmatch_from_tvshow_nfo(root_dir):
     for index, dirname in enumerate(os.listdir(root_dir)):
         if uselessFile(dirname):
             continue
@@ -48,14 +46,13 @@ def rename_dirs_with_tmdb(root_dir):
                     tmdb_elem = root.find('tmdbid')
                     year_elem = root.find('year')
                     title_elem = root.find('title')
-                    if tmdb_elem is not None:
+                    if tmdb_elem.text is not None:
                         nfo_found = True
                         print(f"{index} : {tmdb_elem.text}, {title_elem.text} ({year_elem.text})")
                         mkPlexMatch(dirpath, tmdb_elem.text, title_elem.text, year_elem.text)
                         break
             if not nfo_found:
-                thedirname = os.path.basename(dirpath)
-                print(f"{index} : {thedirname} tmdbid not found")
+                print(f"{index} : {dirname} tmdbid not found")
 
 
 def loadArgs():
@@ -68,7 +65,7 @@ def loadArgs():
 
 def main():
     loadArgs()
-    rename_dirs_with_tmdb(ARGS.dir)
+    make_plexmatch_from_tvshow_nfo(ARGS.dir)
 
 
 if __name__ == '__main__':
