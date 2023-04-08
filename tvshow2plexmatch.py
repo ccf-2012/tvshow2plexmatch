@@ -40,10 +40,13 @@ def make_plexmatch_from_tvshow_nfo(root_dir):
                 if subfile.endswith('.nfo'):
                     nfo_path = os.path.join(dirpath, subfile)
 
-                    tree = ET.parse(nfo_path)
-                    root = tree.getroot()
-
-                    tmdb_elem = root.find('tmdbid')
+                    try:
+                        tree = ET.parse(nfo_path)
+                        root = tree.getroot()
+                        tmdb_elem = root.find('tmdbid')
+                    except:
+                        continue
+                    
                     year_elem = root.find('year')
                     title_elem = root.find('title')
                     if tmdb_elem.text is not None:
