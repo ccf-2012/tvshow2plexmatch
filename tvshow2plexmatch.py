@@ -9,7 +9,7 @@ def uselessFile(entryName):
 def tryint(instr):
     try:
         string_int = int(instr)
-    except ValueError:    
+    except :    
         string_int = 0
     return string_int
 
