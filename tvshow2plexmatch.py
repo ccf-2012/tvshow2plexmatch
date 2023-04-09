@@ -16,12 +16,12 @@ def tryint(instr):
 
 def mkPlexMatch(targetDir, tmdbid, title, year):
     pmfilepath = os.path.join(targetDir, '.plexmatch')
-    with open(pmfilepath, "w") as pmfile:
-        pmfile.write("Title: %s\ntmdbid: %s\n" %
+    with open(pmfilepath, "w", encoding='utf-8') as pmfile:
+        pmfile.write(u"Title: %s\ntmdbid: %s\n" %
                     (title, tmdbid))
         intyear = tryint(year)
         if intyear > 1990:
-            pmfile.write("Year: %s\n" % (year))
+            pmfile.write(u"Year: %s\n" % (year))
 
 
 def make_plexmatch_from_tvshow_nfo(root_dir):
